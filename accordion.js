@@ -11,40 +11,42 @@ document.addEventListener("DOMContentLoaded", function () {
       const mediaWrapper = component.querySelector(
         "[data-accordion-media-receiver]"
       );
-      if (!mediaWrapper) return;
 
-      // Step 1: Move the content of each media slot into the shared media receiver
-      component
-        .querySelectorAll("[data-accordion-media-slot]")
-        .forEach((slot, index) => {
-          // Get the first child (the actual media content) inside the slot
-          const content = slot.firstElementChild;
-          if (!content) return; // Nothing to move
+      // Only process media if mediaWrapper exists
+      if (mediaWrapper) {
+        // Step 1: Move the content of each media slot into the shared media receiver
+        component
+          .querySelectorAll("[data-accordion-media-slot]")
+          .forEach((slot, index) => {
+            // Get the first child (the actual media content) inside the slot
+            const content = slot.firstElementChild;
+            if (!content) return; // Nothing to move
 
-          // Assign a unique ID to the content element
-          const uniqueId = `media-${index}`;
-          content.setAttribute("data-id", uniqueId);
+            // Assign a unique ID to the content element
+            const uniqueId = `media-${index}`;
+            content.setAttribute("data-id", uniqueId);
 
-          // Store original autoplay state for videos inside the content
-          const video = content.querySelector("video");
-          if (video && video.hasAttribute("autoplay")) {
-            video.dataset.autoplay = "true"; // Save autoplay state
-            video.removeAttribute("autoplay"); // Prevent unwanted autoplay on move
-          }
+            // Store original autoplay state for videos inside the content
+            const video = content.querySelector("video");
+            if (video && video.hasAttribute("autoplay")) {
+              video.dataset.autoplay = "true"; // Save autoplay state
+              video.removeAttribute("autoplay"); // Prevent unwanted autoplay on move
+            }
 
-          // Move the content element into the shared media receiver and hide it by default
-          mediaWrapper.appendChild(content);
-          content.style.display = "none";
+            // Move the content element into the shared media receiver and hide it by default
+            mediaWrapper.appendChild(content);
+            content.style.display = "none";
 
-          // Store reference to the media content in the corresponding accordion item
-          const parentAccordion = slot.closest("[data-accordion-item-wrap]");
-          if (parentAccordion) {
-            parentAccordion.setAttribute("data-media-id", uniqueId);
-          }
+            // Store reference to the media content in the corresponding accordion item
+            const parentAccordion = slot.closest("[data-accordion-item-wrap]");
+            if (parentAccordion) {
+              parentAccordion.setAttribute("data-media-id", uniqueId);
+            }
 
-          // Remove the original media slot now that its content has been moved
-          slot.remove();
-        });
+            // Remove the original media slot now that its content has been moved
+            slot.remove();
+          });
+      }
 
       // Handle the accordion behavior within this component
       component
