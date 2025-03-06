@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Get the current URL
   const url = new URL(window.location.href);
+  const currentPage = url.pathname;
 
   // Get all UTM parameters
   const utmSource = url.searchParams.get("utm_source");
@@ -23,4 +24,18 @@ document.addEventListener("DOMContentLoaded", function () {
   if (urlParts.length > 1 && urlParts[1]) {
     localStorage.setItem("url_region", urlParts[1]);
   }
+
+  // Track first visit
+  if (!localStorage.getItem("firstVisit")) {
+    localStorage.setItem("firstVisit", new Date().toISOString());
+    localStorage.setItem("firstPage", currentPage);
+  }
+
+  // Update last visit and last page
+  localStorage.setItem("lastVisit", new Date().toISOString());
+  localStorage.setItem("lastPage", currentPage);
+
+  // Increment page count
+  let pageCount = parseInt(localStorage.getItem("pageCount") || "0");
+  localStorage.setItem("pageCount", (pageCount + 1).toString());
 });
