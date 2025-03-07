@@ -19,15 +19,15 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Configuration for our gated pages
   const gatedPages = [
-    { slug: "webinars", id: "on-demand-webinar-replay" },
-    { slug: "ai-hub", id: "the-ultimate-ai-resource-center" },
+    { id: "webinars", slug: "on-demand-webinar-replay" },
+    { id: "ai-hub", slug: "the-ultimate-ai-resource-center" },
     {
-      slug: "idc1",
-      id: "powering-innovation-private-ai-infrastructure-in-the-enterprise",
+      id: "idc1",
+      slug: "powering-innovation-private-ai-infrastructure-in-the-enterprise",
     },
     {
-      slug: "idc2",
-      id: "powering-innovation-immersion-cooling-unlocks-ai-potential",
+      id: "idc2",
+      slug: "powering-innovation-immersion-cooling-unlocks-ai-potential",
     },
   ];
 
@@ -65,14 +65,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Check if we're on a thank-you page - account for localization prefixes like /en-us/
   // The pattern needs to match /en-us/the-ultimate-ai-resource-center-ty
-  const tyPageMatch = currentPath.match(/\/(?:[a-z]{2}-[a-z]{2}\/)?(.+)-ty\/?$/);
+  const tyPageMatch = currentPath.match(
+    /\/(?:[a-z]{2}-[a-z]{2}\/)?(.+)-ty\/?$/
+  );
 
   if (tyPageMatch) {
     // Find the matching page by checking if any of our gated page slugs are in the path
     console.log("Matched base path:", tyPageMatch[1]);
-    
+
     const matchedPage = gatedPages.find((page) => {
-      const isMatch = currentPath.includes(page.slug) || currentPath.includes(page.id);
+      const isMatch =
+        currentPath.includes(page.slug) || currentPath.includes(page.id);
       console.log(`Checking page ${page.slug} (${page.id}): ${isMatch}`);
       return isMatch;
     });
