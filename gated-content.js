@@ -64,12 +64,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const currentPath = window.location.pathname;
 
   // Check if we're on a thank-you page - account for localization prefixes like /en-us/
-  const tyPageMatch = currentPath.match(/\/(?:[a-z]{2}-[a-z]{2}\/)?([^\/]+)-ty\/?$/);
+  // The pattern needs to match /en-us/the-ultimate-ai-resource-center-ty
+  const tyPageMatch = currentPath.match(/\/(?:[a-z]{2}-[a-z]{2}\/)?(.+)-ty\/?$/);
+
   if (tyPageMatch) {
     // Find the matching page by checking if any of our gated page slugs are in the path
-    const matchedPage = gatedPages.find((page) =>
-      currentPath.includes(page.slug)
-    );
+    console.log("Matched base path:", tyPageMatch[1]);
+    
+    const matchedPage = gatedPages.find((page) => {
+      const isMatch = currentPath.includes(page.slug) || currentPath.includes(page.id);
+      console.log(`Checking page ${page.slug} (${page.id}): ${isMatch}`);
+      return isMatch;
+    });
 
     if (matchedPage) {
       // We're on a thank-you page, so mark this form as completed
