@@ -63,9 +63,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Get the current page path
   const currentPath = window.location.pathname;
 
-  // Check if we're on a thank-you page
-  const tyPageMatch = currentPath.match(/\/([^\/]+)-ty\/?$/);
+  // Check if we're on a thank-you page - account for localization prefixes like /en-us/
+  const tyPageMatch = currentPath.match(/\/(?:[a-z]{2}-[a-z]{2}\/)?([^\/]+)-ty\/?$/);
   if (tyPageMatch) {
+    // Find the matching page by checking if any of our gated page slugs are in the path
     const matchedPage = gatedPages.find((page) =>
       currentPath.includes(page.slug)
     );
@@ -78,7 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     // We're on a regular page, check if we should show gated content
     gatedPages.forEach((page) => {
-      if (currentPath.includes(page.slug)) {
+      // Check if the current path contains the page slug or ID
+      if (currentPath.includes(page.slug) || currentPath.includes(page.id)) {
         const formCompleted = isFormCompleted(page.id);
 
         // Get the form and content elements
