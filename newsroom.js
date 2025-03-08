@@ -28,7 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
             imgEl.alt =
               press1.MediaCollection && press1.MediaCollection.length > 0
                 ? press1.MediaCollection[0].Alt
-                : press1.Headline
+                : press1.Headline.length > 96 
+                  ? press1.Headline.substring(0, 96) + "..." 
+                  : press1.Headline
           }
           // Add URL to Read More button
           const readMoreLink = press1Container.querySelector(".g_clickable_link")
@@ -61,7 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
               imgEl.alt =
                 release2.MediaCollection && release2.MediaCollection.length > 0
                   ? release2.MediaCollection[0].Alt
-                  : release2.Headline
+                  : release2.Headline.length > 96 
+                    ? release2.Headline.substring(0, 96) + "..." 
+                    : release2.Headline
             }
             // Add URL to Read More button
             const readMoreLink = cards[0].querySelector(".g_clickable_link")
@@ -87,7 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
               imgEl.alt =
                 release3.MediaCollection && release3.MediaCollection.length > 0
                   ? release3.MediaCollection[0].Alt
-                  : release3.Headline
+                  : release3.Headline.length > 96 
+                    ? release3.Headline.substring(0, 96) + "..." 
+                    : release3.Headline
             }
             // Add URL to Read More button
             const readMoreLink = cards[1].querySelector(".g_clickable_link")
