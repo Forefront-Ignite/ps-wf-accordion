@@ -86,9 +86,13 @@ document.addEventListener('DOMContentLoaded', function() {
       // Check if options have been added and we haven't set the value yet
       if (resourceTypeSelect.options.length > 1 && !valueHasBeenSet) {
         valueHasBeenSet = true;
-        setSelectValueFromUrlParameter();
- 
-        // Disconnect the observer
+        
+        // Wait for 1000ms before setting the value
+        setTimeout(() => {
+          setSelectValueFromUrlParameter();
+        }, 1000);
+        
+        // Disconnect the observer since we don't need it anymore
         observer.disconnect();
       }
     });
