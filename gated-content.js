@@ -101,6 +101,15 @@ document.addEventListener("DOMContentLoaded", function () {
             // User has completed the form, show content and hide form
             gatedForm.style.display = "none";
             gatedContent.style.display = "block";
+            
+            // If we're on one of the two IDC pages, also hide the baseHeader
+            if (page.id === "idc1" || page.id === "idc2") {
+              const baseHeader = document.getElementById("baseHeader");
+              if (baseHeader) {
+                baseHeader.style.display = "none";
+              }
+            }
+            
             console.log(`Showing gated content for: ${page.slug}`);
           } else {
             // User has not completed the form, show form and hide content
